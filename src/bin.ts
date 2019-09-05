@@ -39,7 +39,7 @@ export default function bin() {
         let _imports = files.map( file => `import * as ${file.symbol} from "./${file.path}"` ).join( "\n" )
         let _exports = files.map( file => file.symbol ).join( ",\n" + indent )
 
-        let file = _imports + "\n\nexport default [\n" + indent + _exports + "\n]"
+        let file = _imports + "\n\nexport default {\n" + indent + _exports + "\n}"
 
         // console.log( file )
 
