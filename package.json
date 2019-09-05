@@ -1,0 +1,19 @@
+{
+    "name": "liberate",
+    "version": "0.0.0",
+    "bin": {
+        "liberate": "./bin/liberate.js"
+    },
+    "scripts": {
+        "clean": "rm -rf lib && rm -rf node_modules && yarn unlink",
+        "setup": "yarn install && yarn run build && yarn unlink; yarn link",
+        "build": "tsc",
+        "watch": "tsc -w"
+    },
+    "main": "index.js",
+    "author": "Kody King <kody.j.king@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "@types/node": "^10.12.9"
+    }
+}
