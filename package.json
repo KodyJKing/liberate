@@ -5,7 +5,8 @@
         "liberate": "./bin/liberate.js"
     },
     "scripts": {
-        "dev": "yarn install && yarn build && yarn link",
+        "dev": "yarn install",
+        "postinstall": "yarn build && yarn link",
         "build": "tsc",
         "watch": "tsc -w"
     },
