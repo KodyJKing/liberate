@@ -5,8 +5,7 @@
         "liberate": "./bin/liberate.js"
     },
     "scripts": {
-        "clean": "rm -rf lib && rm -rf node_modules && yarn unlink",
-        "setup": "yarn install && yarn run build && yarn unlink; yarn link",
+        "setup": "yarn install && yarn build && yarn link",
         "build": "tsc",
         "watch": "tsc -w"
     },
