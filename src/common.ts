@@ -34,34 +34,20 @@ export function isDirectory( file: string ) {
     return stats && stats.isDirectory()
 }
 
-function getFilesRecursiveInternal( root = __dirname, match: RegExp = /./, directory = root, files: string[] = [] ) {
+function getFilesRecursiveInternal( root = __dirname, directory = root, files: string[] = [] ) {
     for ( let name of fs.readdirSync( directory ) ) {
         let fullname = path.join( directory, name )
         let stats = fs.statSync( fullname )
         if ( stats.isFile() ) {
             let relative = path.relative( root, fullname )
-            if ( match.test( relative ) ) {
-                files.push( relative )
-            }
+            files.push( relative )
         } else if ( stats.isDirectory() ) {
-            getFilesRecursiveInternal( root, match, fullname, files )
+            getFilesRecursiveInternal( root, fullname, files )
         }
     }
     return files
 }
 
-export function getFilesRecursive( root = __dirname, match: RegExp = /./ ) {
-    return getFilesRecursiveInternal( root, match )
-}
-
-export function findInFilesRecursive( textMatch: RegExp, fileMatch: RegExp = /./, dir = __dirname ) {
-    let foundFiles: string[] = []
-    for ( let file of getFilesRecursive( dir, fileMatch ) ) {
-        let fullpath = path.join( dir, file )
-        let content = read( fullpath )
-        if ( content != null && textMatch.test( content ) ) {
-            foundFiles.push( fullpath )
-        }
-    }
-    return foundFiles
+export function getFilesRecursive( root = __dirname ) {
+    return getFilesRecursiveInternal( root )
 }

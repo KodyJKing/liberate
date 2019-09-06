@@ -23,28 +23,25 @@ export default function bin() {
         changed = false
         let files = Array.from( filenames )
             .map(
-                name => {
-                    let [ path, ext ] = name.split( "." )
-                    path = path.replace( "\\", "/" )
-                    return { path, ext }
+                ( name, i ) => {
+                    let [ path, extension ] = name.replace( "\\", "/" ).split( "." )
+                    return { path, extension, symbol: "_" + i }
                 }
             ).filter(
-                file => file.ext == "ts" && file.path != "index"
-            ).map(
-                ( file, i ) => ( { path: file.path, symbol: "_" + i } )
+                file => file.extension == "ts" && file.path != "index"
             )
 
         let indent = "    "
 
-        let _imports = files.map( file => `import * as ${file.symbol} from "./${file.path}"` ).join( "\n" )
-        let _exports = files.map( file => file.symbol ).join( ",\n" + indent )
+        let importsStr = files.map( file => `import * as ${file.symbol} from "./${file.path}"` ).join( "\n" )
+        let exportsStr = files.map( file => file.symbol ).join( ",\n" + indent )
 
-        let file = _imports + "\n\nexport default {\n" + indent + _exports + "\n}"
+        let file = importsStr + "\n\nexport default {\n" + indent + exportsStr + "\n}"
 
         // console.log( file )
 
-        let dest = path.join( root, indexFileName )
-        fs.writeFileSync( dest, file, { encoding: "utf8" } )
+        let outpath = path.join( root, indexFileName )
+        fs.writeFileSync( outpath, file, { encoding: "utf8" } )
     }
 
     function checkFile( filename ) {
