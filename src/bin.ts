@@ -24,7 +24,7 @@ export default function bin() {
         let files = Array.from( filenames )
             .map(
                 ( name, i ) => {
-                    let [ path, extension ] = name.replace( "\\", "/" ).split( "." )
+                    let [ path, extension ] = name.replace( /\\/g, "/" ).split( "." )
                     return { path, extension, symbol: "_" + i }
                 }
             ).filter(
